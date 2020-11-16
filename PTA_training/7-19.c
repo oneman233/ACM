@@ -1,0 +1,55 @@
+#include <stdio.h>
+int main()
+{
+    int a[1001],n,i,j,count=0,shu=1,flag;
+    scanf("%d",&n);
+    for(i=1;i<=n;i++)
+        a[i]=1;//数组里全是1，表示在场
+    for(i=1;i<=n;)
+    {
+        if(i<n)
+        {
+            if(a[i]==1)//如果某人在场
+            {
+                if(shu==3)//如果此时数到三，将该人除名
+                {
+                    a[i]=0;
+                    shu=0;//恢复计数
+                }
+                i++;//如果没数到三，直接向下一个人执行判断，shu自加
+                shu++;
+            }
+            else//a[i]==0，已经被除名，直接跳过，不做计数
+                i++;
+        }
+        else//i==n时执行新的判断，如果shu==3则改变a[i]的值，否则直接回到i=1
+        {
+            if(a[i]==1)//如果最后一人在场
+            {
+                if(shu==3)//如果数到三了，最后一人除名
+                {
+                    a[i]=0;
+                    shu=0;//计数归零
+                }
+                i=1;
+                shu++;
+            }
+            else
+                i=1;//直接回到开始，不归零计数
+        }
+        for(j=1;j<=n;j++)
+        {
+            if(a[j]==1)
+            {
+                count++;
+                flag=j;
+            }
+        }
+        if(count==1)
+        {
+            printf("%d",flag);
+            return 0;
+        }
+        count=0;
+    }
+}
